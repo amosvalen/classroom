@@ -1,0 +1,68 @@
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+import datetime
+
+class Window(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.geometry("900x900")
+        self.title("旅遊資訊整合小程式")
+
+
+# 建立mainFrame
+        mainFrame = ttk.Frame(self)
+        mainFrame.pack(padx=30, pady=50)
+# 設定背景圖
+        img = Image.open('plane.png')
+        tk_img = ImageTk.PhotoImage(img)
+        label = tk.Label(mainFrame, image=tk_img,width=200, height=200, anchor='nw')
+        label.pack()
+
+# 建立topFrame
+        top_Frame = ttk.Frame(mainFrame)
+        top_Frame.pack(fill=tk.X)
+# 設定欄位名稱
+        columns = ('#1', '#2', '#3', '#4', '#5')
+        self.tree_C = ttk.Treeview(top_Frame, columns=columns, show='headings')
+        self.tree_C.heading('#1', text='幣別')
+        self.tree_C.column("#1", minwidth=0, width=50)
+        self.tree_C.heading('#2', text='現金匯率本行買入')
+        self.tree_C.column("#2", minwidth=0, width=120)
+        self.tree_C.heading('#3', text='現金匯率本行賣出')
+        self.tree_C.column("#3", minwidth=0, width=120)
+        self.tree_C.heading('#4', text='即期匯率本行買入')
+        self.tree_C.column("#4", minwidth=0, width=120)
+        self.tree_C.heading('#5', text='即期匯率本行賣出')
+        self.tree_C.column("#5", minwidth=0, width=120)
+        self.tree_C.pack(side=tk.LEFT, fill=tk.X)
+# 建立bottomFrame裝Treeview-------------------
+        now = datetime.datetime.now()
+# 建立現在時刻
+        nowString = now.strftime("%Y-%m-%d %H:%M:%S")
+        self.bottomFrame = ttk.LabelFrame(mainFrame, text=f"台灣時間-{nowString}")
+        self.bottomFrame.pack()
+# 建立Treeview
+        columns = ('#1', '#2', '#3', '#4', '#5', '#6')
+        self.tree_A = ttk.Treeview(self.bottomFrame, columns=columns, show='headings')
+        self.tree_A.heading('#1', text='出發地')
+        self.tree_A.column("#1", minwidth=0, width=50)
+        self.tree_A.heading('#2', text='時間')
+        self.tree_A.column("#2", minwidth=0, width=50)
+        self.tree_A.heading('#3', text='班機資訊')
+        self.tree_A.column("#3", minwidth=0, width=150)
+        self.tree_A.heading('#4', text='航廈')
+        self.tree_A.column("#4", minwidth=0, width=50)
+        self.tree_A.heading('#5', text='登機門')
+        self.tree_A.column("#5", minwidth=0, width=100)
+        self.tree_A.heading('#6', text='狀態')
+        self.tree_A.column("#6", minwidth=0, width=150)
+        self.tree_A.pack(side=tk.TOP)
+
+def main():
+    window = Window()
+    window.mainloop()
+
+
+if __name__ == "__main__":
+    main()
